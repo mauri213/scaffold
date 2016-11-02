@@ -8,8 +8,9 @@ module.exports = {
 	module: {
 		loaders: [
 			{
-				loader: 'babel-loader',
-				test: /\.js$/, // only going to load files with .js
+				loader: 'babel-loader', // will transform the jsx to js
+				test: /\.jsx?$/, // only going to load files with .jsx // ? only applies to the
+																	  // character b4 it
 				exclude: /(node_modules)/,
 				query: {
 					presets: ['react']
