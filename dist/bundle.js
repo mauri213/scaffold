@@ -52,9 +52,9 @@
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(34);
 
-	var Counter = __webpack_require__(172);
+	var TodoList = __webpack_require__(172);
 
-	ReactDOM.render(React.createElement(Counter, { phrase: 'I like tacos.' }), document.body);
+	ReactDOM.render(React.createElement(TodoList, null), document.querySelector('#app'));
 
 /***/ },
 /* 1 */
@@ -21429,32 +21429,134 @@
 
 	var React = __webpack_require__(1);
 
-	var Counter = React.createClass({
-		displayName: 'Counter',
+	var TodoItem = __webpack_require__(173);
+	var todoStore = __webpack_require__(174);
 
+	var TodoList = React.createClass({
+		displayName: 'TodoList',
+
+		// liefcycle hook: executed at some point during the lifetime of
+		// a component. Pass a callback function during some point in the lifetime
+		// of a view. Can be compared to for loop: before, before, after
+		getInitialState: function () {
+			return {
+				// count: 0
+				todoItems: todoStore,
+				newItemText: '',
+				errorMessage: ''
+			};
+		},
+		componentWillMount() {// when the component is created and ready to be placed in the DOM
+			// 	var _this = this;
+			// 	setInterval(function () {
+			// 		_this.setState({
+			// 			count: _this.state.count + 1
+			// 		});
+			// 	}, 1000);
+		},
 
 		render: function () {
-			var str = 'I love tacos';
+			var todoItems = this.state.todoItems.map(function (item) {
+				return React.createElement(TodoItem, { item: item });
+			});
 			return React.createElement(
 				'div',
 				null,
 				React.createElement(
-					'p',
+					'ul',
 					null,
-					this.props.phrase
+					todoItems
 				),
-				React.createElement('button', null),
-				'// ',
+				React.createElement(
+					'div',
+					null,
+					this.state.errorMessage
+				),
+				React.createElement('input', { ref: 'input', onChange: this.handleChange, type: 'text', value: this.state.newItemText }),
 				React.createElement(
 					'button',
-					null,
-					this.props.phrase
+					{ onClick: this.handleClick },
+					'Add Item'
 				)
+			);
+		},
+
+		handleClick: function () {
+			// this.setState({
+			// 	count: this.state.count + 10
+			// });
+			todoStore.push({
+				text: this.state.newItemText
+			});
+			if (this.state.newItemTet === "") {
+				this.setState({
+					errorMessage: 'Try again!'
+				});
+			} else {
+				todoStore.push({
+					text: this.state.newItemText
+				});
+				this.setState({
+					newItemText: '',
+					todoItems: todoStore
+				});
+			}
+		},
+
+		handleChange: function () {
+			this.setState({
+				newItemText: this.refs.input.value
+			});
+		}
+
+	});
+
+	module.exports = TodoList;
+	/* imageStore = [
+		{ url: "http://...",} 
+	];
+	var TodoItem = React.createClass({
+		getInitialState: function () {
+			return {
+				count: 0
+			};
+		}
+	});
+
+		handleClick: function () {
+			this.setState({
+				countthis.state.count + 1
+			});
+		}
+	});
+	*/
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+
+	var TodoItem = React.createClass({
+		displayName: 'TodoItem',
+
+		render: function () {
+			return React.createElement(
+				'li',
+				null,
+				this.props.item.text
 			);
 		}
 	});
 
-	module.exports = Counter;
+	module.exports = TodoItem;
+
+/***/ },
+/* 174 */
+/***/ function(module, exports) {
+
+	var todoItems = [{ text: "Do the dishes!" }];
+	module.exports = todoItems;
 
 /***/ }
 /******/ ]);
