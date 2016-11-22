@@ -7,8 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch:js": "webpack --watch",
     "build:js": "webpack",
-    "dev": "npm run watch:js & npm start",
-    "postinstall": "cp node_modules/jquery/dist/jquery.js lib/ && cp node_modules/normalize.css/normalize.css lib/"
+    "css": "node-sass src/scss/main.scss -o dist",
+    "watch:css": "node-sass src/scss/main.scss -wo dist",
+    "dev": "npm run watch:js & npm run watch:css & npm start",
+    "postinstall": "cp node_modules/normalize.css/normalize.css lib/"
   },
   "author": "",
   "license": "ISC",
@@ -20,9 +22,12 @@
     "eventemitter3": "^2.0.2",
     "express": "^4.14.0",
     "jquery": "^3.1.1",
+    "lodash": "^4.17.2",
+    "lowdb": "^0.14.0",
     "node-sass": "^3.13.0",
     "normalize.css": "^5.0.0",
     "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "react-dom": "^15.3.2",
+    "shortid": "^2.2.6"
   }
 }
